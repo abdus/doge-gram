@@ -43,6 +43,22 @@
 
 .user_context_menu span {
   padding: 0.4rem;
+  cursor: pointer;
+}
+
+.login_option_menu {
+  position: absolute;
+  top: 1.6rem;
+  right: -2px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid lightgray;
+}
+
+.login_option_menu span {
+  padding: 0.7rem 1.6rem;
+  cursor: pointer;
 }
 
 @media (max-width: 40rem) {

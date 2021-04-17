@@ -2,14 +2,17 @@ import React from "react";
 import firebase from "firebase";
 import classes from "./NavBar.module.css";
 import { GlobalContext } from "../../context";
+import { useToasts } from "react-toast-notifications";
 
 interface IProps {
   showUploadSetter(flag: boolean): void;
 }
 
 export function Nav(props: IProps) {
+  const { addToast } = useToasts();
   const { dispatch, state } = React.useContext(GlobalContext);
   const [authenticating, setAuthenticating] = React.useState(false);
+  const [showLoginOptions, setShowLoginOptions] = React.useState(false);
 
   React.useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -29,28 +32,35 @@ export function Nav(props: IProps) {
     });
   }, []);
 
+  function auth(kind: "GITHUB" | "GOOGLE") {
+    setAuthenticating(true);
+
+    return fireAuth(kind)
+      .then((user) => dispatch({ type: "AUTH", payload: user }))
+      .catch((err) => addToast(err.message, { appearance: "error" }))
+      .finally(() => {
+        setAuthenticating(false);
+        setShowLoginOptions(false);
+      });
+  }
+
   return (
     <nav className={classes.navbar}>
       <strong>DogeGram</strong>
 
       {!state.auth_user ? (
-        <button
-          onClick={() => {
-            setAuthenticating(true);
-            fireAuth()
-              .then((user) => {
-                dispatch({ type: "AUTH", payload: user });
-              })
-              .catch((err) => {
-                console.log(err.message);
-              })
-              .finally(() => {
-                setAuthenticating(false);
-              });
-          }}
-        >
-          sign in with github
-        </button>
+        <div style={{ position: "relative" }} onClick={() => {}}>
+          <button onClick={() => setShowLoginOptions(!showLoginOptions)}>
+            sign in
+          </button>
+
+          {showLoginOptions && (
+            <span className={classes.login_option_menu}>
+              <span onClick={() => auth("GOOGLE")}>Google</span>
+              <span onClick={() => auth("GITHUB")}>Github</span>
+            </span>
+          )}
+        </div>
       ) : (
         <LoggedInNav
           {...state.auth_user}
@@ -102,12 +112,19 @@ function LoggedInNav(props: any) {
   );
 }
 
-async function fireAuth() {
+async function fireAuth(kind: "GOOGLE" | "GITHUB") {
+  if (!kind) return;
+
   const ghAuth = new firebase.auth.GithubAuthProvider();
+  const googleAuth = new firebase.auth.GoogleAuthProvider();
 
   try {
     await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-    const result = await firebase.auth().signInWithPopup(ghAuth);
+    const result = await firebase
+      .auth()
+      .signInWithPopup(
+        kind === "GITHUB" ? ghAuth : kind === "GOOGLE" ? googleAuth : null
+      );
     const user = result.user;
     const doc = {
       uid: user.uid,

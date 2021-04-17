@@ -7,13 +7,36 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +1 components/NavBar/index.tsx
-badd +145 components/UploadFile/index.tsx
-badd +87 components/Card/index.tsx
-badd +18 pages/_app.tsx
+badd +40 components/NavBar/index.tsx
+badd +1 README.md
+badd +46 components/NavBar/NavBar.module.css
 argglobal
 %argdel
-edit components/NavBar/index.tsx
+edit README.md
+set splitbelow splitright
+wincmd t
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+argglobal
+setlocal fdm=indent
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+4
+normal! zo
+let s:l = 4 - ((3 * winheight(0) + 24) / 49)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+4
+normal! 037|
+tabedit components/NavBar/index.tsx
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -35,157 +58,77 @@ setlocal fdl=10
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-11
+12
 normal! zo
-15
+36
 normal! zo
-16
+39
 normal! zo
-17
+48
 normal! zo
-18
-normal! zo
-33
-normal! zo
-34
-normal! zo
-37
-normal! zo
-let s:l = 38 - ((37 * winheight(0) + 24) / 49)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-38
-normal! 0
-wincmd w
-argglobal
-if bufexists("components/UploadFile/index.tsx") | buffer components/UploadFile/index.tsx | else | edit components/UploadFile/index.tsx | endif
-setlocal fdm=indent
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=13
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-17
-normal! zo
-51
+49
 normal! zo
 52
 normal! zo
 53
 normal! zo
+58
+normal! zo
+65
+normal! zo
+75
+normal! zo
+78
+normal! zo
+79
+normal! zo
+80
+normal! zo
+85
+normal! zo
+92
+normal! zo
+93
+normal! zo
+97
+normal! zo
+98
+normal! zo
 99
 normal! zo
-100
+116
 normal! zo
-103
+122
 normal! zo
-104
-normal! zo
-127
-normal! zo
-139
-normal! zo
-140
-normal! zo
-141
+124
 normal! zo
 146
 normal! zo
 147
 normal! zo
-159
-normal! zo
-let s:l = 99 - ((48 * winheight(0) + 24) / 49)
+let s:l = 92 - ((29 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-99
-normal! 0
+92
+normal! 053|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
-exe 'vert 2resize ' . ((&columns * 119 + 119) / 239)
-tabedit components/Card/index.tsx
-set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
-wincmd t
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
-exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
-exe 'vert 2resize ' . ((&columns * 119 + 119) / 239)
 argglobal
+if bufexists("components/NavBar/NavBar.module.css") | buffer components/NavBar/NavBar.module.css | else | edit components/NavBar/NavBar.module.css | endif
 setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=8
+setlocal fdl=2
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-31
-normal! zo
-32
-normal! zo
-33
-normal! zo
-49
-normal! zo
-86
-normal! zo
-87
-normal! zo
-88
-normal! zo
-101
-normal! zo
-let s:l = 87 - ((46 * winheight(0) + 24) / 49)
+let s:l = 46 - ((19 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-87
-normal! 037|
-wincmd w
-argglobal
-if bufexists("pages/_app.tsx") | buffer pages/_app.tsx | else | edit pages/_app.tsx | endif
-setlocal fdm=indent
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=4
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-15
-normal! zo
-16
-normal! zo
-17
-normal! zo
-18
-normal! zo
-19
-normal! zo
-21
-normal! zo
-33
-normal! zo
-42
-normal! zo
 46
-normal! zo
-let s:l = 42 - ((37 * winheight(0) + 24) / 49)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-42
-normal! 042|
+normal! 018|
 wincmd w
 2wincmd w
 exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
