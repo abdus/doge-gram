@@ -1,0 +1,40 @@
+.wrapper {
+  margin: 3rem 0;
+  border: 1px solid lightgray;
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    border: none;
+  }
+}
+
+.header,
+.footer {
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header img {
+  width: 100%;
+  max-width: 2.5rem;
+  margin-right: 0.7rem;
+  border: 1px solid lightgray;
+  border-radius: 100%;
+}
+
+.flex_nowrap_aligncenter {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.caption {
+  margin-top: 0.6rem;
+  color: gray;
+  line-height: 1.6;
+}

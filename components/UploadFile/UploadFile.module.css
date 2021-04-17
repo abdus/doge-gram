@@ -1,0 +1,130 @@
+.wrapper {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  background: #00000080;
+  --max-width: 30rem;
+}
+
+.progress_wrapper {
+  width: 100%;
+  max-width: 30rem;
+  border-radius: 0.4rem 0.4rem 0 0;
+  overflow: hidden;
+}
+
+.progress {
+  height: 15px;
+  background: deeppink;
+  transition: 0.3s ease-in-out width;
+}
+
+.wrapper main {
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: var(--max-width);
+  max-height: var(--max-width);
+  background: #fff;
+}
+
+.caption {
+  display: flex;
+  width: 100%;
+  max-width: var(--max-width);
+  background: #fff;
+  border: 1px solid lightgray;
+}
+
+.caption textarea {
+  width: 100%;
+  min-height: 7rem;
+  padding: 0.8rem;
+  font: inherit;
+  border: none;
+  outline: none;
+  resize: vertical;
+}
+
+.wrapper input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.image_preview {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: var(--max-width);
+  padding: 0.5rem;
+  overflow: auto;
+  background: #fff;
+}
+
+.image_preview:empty {
+  padding: 0;
+}
+
+.image_preview img {
+  max-width: 6rem;
+  max-height: 6rem;
+  margin-right: 0.5rem;
+  border: 1px solid lightgray;
+}
+
+.action_btn {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  width: 100%;
+  max-width: var(--max-width);
+  overflow: hidden;
+  text-align: center;
+  border-radius: 0 0 0.4rem 0.4rem;
+}
+
+.cancel_btn,
+.submit_btn {
+  width: 100%;
+  padding: 1rem;
+  color: #fff;
+  font: inherit;
+  font-weight: bold;
+  background: red;
+  border: none;
+  cursor: pointer;
+}
+
+.submit_btn {
+  position: relative;
+  color: #141414;
+  background: lime;
+  border: none;
+}
+
+.submit_btn:disabled {
+  color: gray;
+  background: lightgray;
+}
+
+@media (max-width: 30rem) {
+  .wrapper {
+    justify-content: flex-end;
+  }
+
+  .cancel_btn {
+    border-radius: 0;
+  }
+}

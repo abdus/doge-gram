@@ -1,0 +1,53 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 40rem;
+  margin: auto;
+  padding: 1rem 0;
+  background: #fff;
+}
+
+.navbar button {
+  font: inherit;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logged_in_nav img {
+  width: 2.2rem;
+  min-height: 2.2rem;
+  border: 2px solid lightgray;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.user_context_menu {
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 10rem;
+  max-width: 30rem;
+  margin-right: 0.4rem;
+  padding: 0.4rem;
+  background: #fff;
+  border: 1px solid lightgray;
+}
+
+.user_context_menu span {
+  padding: 0.4rem;
+}
+
+@media (max-width: 40rem) {
+  .navbar {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid lightgray;
+  }
+}
