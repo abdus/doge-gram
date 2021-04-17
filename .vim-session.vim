@@ -7,19 +7,60 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +40 components/NavBar/index.tsx
-badd +1 README.md
+badd +1 components/NavBar/index.tsx
+badd +4 README.md
 badd +46 components/NavBar/NavBar.module.css
+badd +51 components/Image/index.tsx
+badd +1 ~/Dev/personal/doge-gram/next.config.js
 argglobal
 %argdel
-edit README.md
+edit components/Image/index.tsx
 set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
 wincmd t
 set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
+exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 119 + 119) / 239)
 argglobal
+setlocal fdm=indent
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=6
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+12
+normal! zo
+17
+normal! zo
+18
+normal! zo
+19
+normal! zo
+31
+normal! zo
+32
+normal! zo
+35
+normal! zo
+39
+normal! zo
+let s:l = 51 - ((47 * winheight(0) + 24) / 49)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+51
+normal! 030|
+wincmd w
+argglobal
+if bufexists("~/Dev/personal/doge-gram/next.config.js") | buffer ~/Dev/personal/doge-gram/next.config.js | else | edit ~/Dev/personal/doge-gram/next.config.js | endif
 setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -28,14 +69,15 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-4
-normal! zo
-let s:l = 4 - ((3 * winheight(0) + 24) / 49)
+let s:l = 2 - ((1 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-4
-normal! 037|
+2
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 119 + 119) / 239)
 tabedit components/NavBar/index.tsx
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -123,11 +165,11 @@ setlocal fdl=2
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 46 - ((19 * winheight(0) + 24) / 49)
+let s:l = 50 - ((23 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-46
+50
 normal! 018|
 wincmd w
 2wincmd w
