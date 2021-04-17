@@ -83,7 +83,14 @@ export function Card(props: IProps) {
 
         {/*description*/}
         {props.caption && (
-          <div className={classes.caption}>{props.caption}</div>
+          <div className={classes.caption}>
+            {props?.caption?.split("\\n").map((val, i) => (
+              <React.Fragment key={i}>
+                {val}
+                <br />
+              </React.Fragment>
+            ))}
+          </div>
         )}
       </aside>
     </article>

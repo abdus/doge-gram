@@ -142,7 +142,11 @@ export function UploadFile(props: IProps) {
                         author: firebase
                           .firestore()
                           .doc("users/" + firebase.auth().currentUser.uid),
-                        caption: formData?.get("caption")?.toString() || "",
+                        caption:
+                          formData
+                            ?.get("caption")
+                            ?.toString()
+                            ?.replace("\n", "\\n") || "",
                         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                         isPrivate: false,
                       };

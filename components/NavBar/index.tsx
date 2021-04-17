@@ -49,7 +49,7 @@ export function Nav(props: IProps) {
               });
           }}
         >
-          sign in
+          sign in with github
         </button>
       ) : (
         <LoggedInNav
