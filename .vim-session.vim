@@ -7,12 +7,11 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +17 pages/index.tsx
-badd +41 components/Card/index.tsx
-badd +22 hooks/useGetPosts.tsx
+badd +50 pages/index.tsx
+badd +45 components/Card/index.tsx
 argglobal
 %argdel
-edit pages/index.tsx
+edit components/Card/index.tsx
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -23,9 +22,64 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 117 + 119) / 239)
-exe 'vert 2resize ' . ((&columns * 121 + 119) / 239)
+exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 119 + 119) / 239)
 argglobal
+setlocal fdm=indent
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=8
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+32
+normal! zo
+36
+normal! zo
+38
+normal! zo
+40
+normal! zo
+51
+normal! zo
+52
+normal! zo
+56
+normal! zo
+58
+normal! zo
+68
+normal! zo
+72
+normal! zo
+76
+normal! zo
+77
+normal! zo
+91
+normal! zo
+92
+normal! zo
+105
+normal! zo
+106
+normal! zo
+107
+normal! zo
+120
+normal! zo
+128
+normal! zo
+let s:l = 103 - ((32 * winheight(0) + 24) / 49)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+103
+normal! 09|
+wincmd w
+argglobal
+if bufexists("pages/index.tsx") | buffer pages/index.tsx | else | edit pages/index.tsx | endif
 setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -44,77 +98,18 @@ normal! zo
 normal! zo
 23
 normal! zo
-37
+38
 normal! zo
-let s:l = 15 - ((9 * winheight(0) + 24) / 49)
+let s:l = 50 - ((41 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-15
-normal! 045|
+50
+normal! 0
 wincmd w
-argglobal
-if bufexists("hooks/useGetPosts.tsx") | buffer hooks/useGetPosts.tsx | else | edit hooks/useGetPosts.tsx | endif
-setlocal fdm=indent
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=6
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-5
-normal! zo
-11
-normal! zo
-14
-normal! zo
-15
-normal! zo
-18
-normal! zo
-let s:l = 17 - ((0 * winheight(0) + 24) / 49)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-17
-normal! 09|
-wincmd w
-exe 'vert 1resize ' . ((&columns * 117 + 119) / 239)
-exe 'vert 2resize ' . ((&columns * 121 + 119) / 239)
-tabedit components/Card/index.tsx
-set splitbelow splitright
-wincmd t
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
-argglobal
-setlocal fdm=indent
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=8
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-31
-normal! zo
-32
-normal! zo
-33
-normal! zo
-37
-normal! zo
-39
-normal! zo
-let s:l = 41 - ((34 * winheight(0) + 24) / 49)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-41
-normal! 013|
-tabnext 2
+exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 119 + 119) / 239)
+tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

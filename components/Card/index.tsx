@@ -20,6 +20,7 @@ const FA_FONT_SIZE = "1.4em";
 const FA_FONT_COLOR = "#4b4b4b";
 
 interface IProps {
+  postUID: string;
   imgSrc: string;
   imgAltText?: string;
   caption?: string;
@@ -28,22 +29,40 @@ interface IProps {
 }
 
 export function Card(props: IProps) {
+  const [post, setPost] = React.useState<IProps>(props);
+
+  // listen for update
+  React.useEffect(() => {
+    const docRef = firebase.firestore().doc(`posts/${props.postUID}`);
+    docRef.onSnapshot((snapshot) => {
+      const newDoc = snapshot.data();
+      newDoc?.author?.get().then((author) => {
+        setPost({
+          ...(props || ({} as any)),
+          imgSrc: newDoc?.media[0],
+          caption: newDoc?.caption,
+          author: author?.data(),
+        });
+      });
+    });
+  }, [props.postUID]);
+
   return (
     <article className={classes.wrapper}>
       <aside
         className={classes.header}
-        onClick={() => (window.location.href = `/user/${props.author.uid}`)}
+        onClick={() => (window.location.href = `/user/${post?.author?.uid}`)}
       >
-        <img src={props.author.photoURL} />
+        <img src={post?.author?.photoURL} />
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <span>{props.author.name}</span>
+          <span>{post?.author?.name}</span>
           <small style={{ color: "gray", marginTop: "0.2rem" }}>
-            {formatDate(new Date(props.dateOfPosting))}
+            {formatDate(new Date(post?.dateOfPosting))}
           </small>
         </div>
       </aside>
       <main className={classes.main_section}>
-        <Image src={props.imgSrc} alt={props.imgAltText} />
+        <Image src={post?.imgSrc} alt={post?.imgAltText} />
       </main>
       <aside className={classes.footer}>
         <div
@@ -82,9 +101,9 @@ export function Card(props: IProps) {
         </div>
 
         {/*description*/}
-        {props.caption && (
+        {post?.caption && typeof post?.caption === "string" && (
           <div className={classes.caption}>
-            {props?.caption?.split("\\n").map((val, i) => (
+            {post?.caption?.split("\\n").map((val, i) => (
               <React.Fragment key={i}>
                 {val}
                 <br />

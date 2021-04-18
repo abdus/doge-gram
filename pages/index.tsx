@@ -26,6 +26,7 @@ export default function Home({ posts }) {
             author={doc.author}
             caption={doc.caption}
             dateOfPosting={doc.createdAt}
+            postUID={doc.uid}
           />
         ))}
       </Layout>
@@ -46,6 +47,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const postInfo = doc.data();
     const author = await postInfo?.author?.get();
 
+    postInfo.uid = doc.id;
     postInfo.author = author.data();
     postInfo.createdAt = postInfo.createdAt.toDate().getTime();
 
