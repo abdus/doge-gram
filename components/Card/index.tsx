@@ -274,6 +274,7 @@ function formatDate(dt: Date) {
 
     // for more than one week, return the date
     if (seconds / ONE_WEEK_IN_SEC > 1) {
+      return 'more than a week ago'
     }
 
     // 6 days ago
