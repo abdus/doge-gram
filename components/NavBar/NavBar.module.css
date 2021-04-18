@@ -28,6 +28,16 @@
   cursor: pointer;
 }
 
+.logged_in_nav_arrow_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  background: lightgray;
+  border-radius: 0.3rem;
+  user-select: none;
+}
+
 .user_context_menu {
   position: absolute;
   right: 0;
@@ -35,7 +45,6 @@
   flex-direction: column;
   min-width: 10rem;
   max-width: 30rem;
-  margin-right: 0.4rem;
   padding: 0.4rem;
   background: #fff;
   border: 1px solid lightgray;

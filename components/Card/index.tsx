@@ -169,7 +169,7 @@ export function Card(props: IProps) {
                 marginRight: "0.5rem",
               }}
             />
-            0
+            {(allComments?.length || 0) + " comments"}
           </span>
         </div>
 
@@ -187,7 +187,7 @@ export function Card(props: IProps) {
 
         {/*comment section*/}
         <div className={classes.comments_wrapper}>
-          <div >
+          <div>
             {allComments?.map((comm) => {
               return (
                 <div className={classes.render_comment}>
@@ -197,7 +197,10 @@ export function Card(props: IProps) {
                       {/*<strong>{comm?.author?.name}</strong>*/}
                       {comm?.body}
                     </div>
-                    <small>{formatDate(new Date(comm?.createdAt))}</small>
+                    <small style={{ marginTop: "0.2rem", display: "block" }}>
+                      {comm?.author?.name} &middot;{" "}
+                      {formatDate(new Date(comm?.createdAt))}
+                    </small>
                   </article>
                 </div>
               );

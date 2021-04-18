@@ -3,6 +3,9 @@ import firebase from "firebase";
 import classes from "./NavBar.module.css";
 import { GlobalContext } from "../../context";
 import { useToasts } from "react-toast-notifications";
+import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface IProps {
   showUploadSetter(flag: boolean): void;
@@ -82,11 +85,17 @@ function LoggedInNav(props: any) {
           setShowUserContextMenu(!showUserContextMenu);
         }}
       >
-        <img
-          onClick={() => setShowUserContextMenu(!showUserContextMenu)}
-          src={props.photoURL}
-          alt="user profile"
-        />
+        <div className={classes.logged_in_nav_arrow_wrapper}>
+          <FontAwesomeIcon
+            icon={showUserContextMenu ? faAngleUp : faAngleDown}
+            style={{ fontSize: "1.2em", color: "gray", marginRight: "0.4rem" }}
+          />
+          <img
+            onClick={() => setShowUserContextMenu(!showUserContextMenu)}
+            src={props.photoURL}
+            alt="user profile"
+          />
+        </div>
 
         {showUserContextMenu && (
           <div className={classes.user_context_menu}>

@@ -13,3 +13,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+img {
+  user-select: none;
+}
