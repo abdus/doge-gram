@@ -24,7 +24,7 @@ interface IProps {
   imgAltText?: string;
   caption?: string;
   author: IUser;
-  dateOfPosting: any; // firestore.FieldValue.serverTimestamp
+  dateOfPosting: string; // firestore.FieldValue.serverTimestamp
 }
 
 export function Card(props: IProps) {
@@ -38,7 +38,7 @@ export function Card(props: IProps) {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <span>{props.author.name}</span>
           <small style={{ color: "gray", marginTop: "0.2rem" }}>
-            {formatDate(props.dateOfPosting?.toDate())}
+            {formatDate(new Date(props.dateOfPosting))}
           </small>
         </div>
       </aside>

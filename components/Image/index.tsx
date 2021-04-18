@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./Image.module.css";
+//@ts-ignore
 import placeholder from "../../assets/placeholder-image.png";
 
 interface IProps {

@@ -24,6 +24,8 @@ export function useGetPosts(collection: string) {
             const postData = doc.data();
 
             postData.author = author.data();
+            postData.createdAt = postData.createdAt.toDate().getTime(); //serializable datatype
+
             dataArr.push(postData);
           }
 

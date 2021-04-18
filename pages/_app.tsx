@@ -16,6 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ContextProvider>
       <ToastProvider>
         <Head>
+          <title>DogeGram</title>
           <meta name="title" content="DogeGram" />
           <meta
             name="description"
