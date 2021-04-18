@@ -12,9 +12,11 @@ import firebase from "firebase";
 import { Image } from "../Image";
 import { IUser } from "../../reducer";
 import classes from "./Card.module.css";
+import { useToasts } from "react-toast-notifications";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as faHeartSolid } from "@fortawesome/free-solid-svg-icons";
 
 const FA_FONT_SIZE = "1.4em";
 const FA_FONT_COLOR = "#4b4b4b";
@@ -26,19 +28,28 @@ interface IProps {
   caption?: string;
   author: IUser;
   dateOfPosting: string; // firestore.FieldValue.serverTimestamp
+  likedBy: string[];
 }
 
 export function Card(props: IProps) {
+  const { addToast } = useToasts();
   const [post, setPost] = React.useState<IProps>(props);
+  const [comment, setComment] = React.useState<string>("");
+  const [allComments, setAllComments] = React.useState<any>();
+  const [hasLiked, setHasLiked] = React.useState(
+    post?.likedBy?.includes(firebase.auth()?.currentUser?.uid)
+  );
+  const docRef = React.useRef(
+    firebase.firestore().doc(`posts/${props.postUID}`)
+  ).current;
 
   // listen for update
   React.useEffect(() => {
-    const docRef = firebase.firestore().doc(`posts/${props.postUID}`);
     docRef.onSnapshot((snapshot) => {
       const newDoc = snapshot.data();
       newDoc?.author?.get().then((author) => {
         setPost({
-          ...(props || ({} as any)),
+          ...(post || ({} as any)),
           imgSrc: newDoc?.media[0],
           caption: newDoc?.caption,
           author: author?.data(),
@@ -46,6 +57,61 @@ export function Card(props: IProps) {
       });
     });
   }, [props.postUID]);
+
+  // handle like/dislike
+  React.useEffect(() => {
+    const loggedinUserUID = firebase.auth().currentUser?.uid;
+    let tmp = JSON.parse(JSON.stringify(post?.likedBy)) || [];
+
+    // liked, reflect the data on server
+    if (hasLiked) {
+      tmp.push(loggedinUserUID);
+      tmp = new Set(tmp);
+      docRef.set({ likedBy: [...tmp] }, { merge: true });
+    }
+
+    // unliked, reflect the data on server
+    if (!hasLiked) {
+      const index = tmp.indexOf(loggedinUserUID);
+      tmp.splice(index, 0);
+      docRef.set({ likedBy: tmp }, { merge: true });
+    }
+    if (!hasLiked && post.likedBy?.includes(loggedinUserUID)) {
+      const index = post?.likedBy?.indexOf(loggedinUserUID);
+      const tmp = JSON.parse(JSON.stringify(post?.likedBy));
+      typeof index === "number" && tmp?.splice(index, 1);
+
+      docRef.set({ likedBy: tmp }, { merge: true });
+    }
+  }, [hasLiked, firebase.auth().currentUser?.uid]);
+
+  // listen for comment updates
+  React.useEffect(() => {
+    const commentsRef = firebase
+      .firestore()
+      .collection("comments")
+      .where("postId", "==", post.postUID)
+      .orderBy("createdAt", "desc");
+
+    const unsub = commentsRef.onSnapshot(async (snapshot) => {
+      const cmntsArr = [];
+
+      for (let i = 0; i < snapshot.docs.length; i++) {
+        const doc = snapshot.docs[i].data();
+        const author = await doc?.author?.get();
+
+        doc.author = author.data();
+        doc.id = snapshot.docs[i].id;
+        doc.createdAt = doc?.createdAt?.toDate()?.getTime();
+
+        cmntsArr.push(doc);
+      }
+
+      setAllComments(cmntsArr);
+    });
+
+    return () => unsub();
+  }, [post.postUID]);
 
   return (
     <article className={classes.wrapper}>
@@ -70,18 +136,26 @@ export function Card(props: IProps) {
           style={{ margin: "0.4rem 0 0.8rem 0" }}
         >
           <span
-            style={{ marginRight: "2rem" }}
+            style={{ marginRight: "2rem", cursor: "pointer" }}
             className={classes.flex_nowrap_aligncenter}
+            onClick={() => {
+              firebase.auth().currentUser
+                ? setHasLiked(!hasLiked)
+                : addToast("You must be logged in to like a post", {
+                    appearance: "error",
+                    autoDismiss: true,
+                  });
+            }}
           >
             <FontAwesomeIcon
-              icon={faHeart}
+              icon={hasLiked ? faHeartSolid : faHeart}
               style={{
                 fontSize: FA_FONT_SIZE,
-                color: FA_FONT_COLOR,
                 marginRight: "0.5rem",
+                color: hasLiked ? "red" : FA_FONT_COLOR,
               }}
             />
-            0<em>(upcoming)</em>
+            {props?.likedBy?.length || 0}
           </span>
 
           <span
@@ -96,7 +170,7 @@ export function Card(props: IProps) {
                 marginRight: "0.5rem",
               }}
             />
-            0<em>(upcoming)</em>
+            0
           </span>
         </div>
 
@@ -111,6 +185,71 @@ export function Card(props: IProps) {
             ))}
           </div>
         )}
+
+        {/*comment section*/}
+        <div className={classes.comments_wrapper}>
+          <div className={classes.render_comment}>
+            {allComments?.map((comm) => {
+              return (
+                <>
+                  <img src={comm?.author?.photoURL} />
+                  <article>
+                    <div>
+                      <strong>{comm?.author?.name}</strong> {comm?.body}
+                    </div>
+                    <small>{formatDate(new Date(comm?.createdAt))}</small>
+                  </article>
+                </>
+              );
+            })}
+          </div>
+
+          <div className={classes.comment_box}>
+            <input
+              style={{ width: "100%", marginRight: "0.5rem" }}
+              placeholder="add a comment ..."
+              autoFocus={true}
+              onChange={(e) => setComment(e.target.value)}
+              value={comment}
+            />
+            {comment && (
+              <button
+                onClick={async () => {
+                  if (!firebase.auth().currentUser) {
+                    return addToast("You must be logged in to post a comment", {
+                      autoDismiss: true,
+                      appearance: "error",
+                    });
+                  }
+
+                  try {
+                    const collectionRef = firebase
+                      .firestore()
+                      .collection("comments");
+
+                    await collectionRef.add({
+                      body: comment,
+                      postId: post.postUID,
+                      author: await firebase
+                        .firestore()
+                        .doc(`users/${firebase.auth()?.currentUser?.uid}`),
+                      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    });
+
+                    setComment("");
+                  } catch (err) {
+                    return addToast("You must be logged in to post a comment", {
+                      autoDismiss: true,
+                      appearance: "error",
+                    });
+                  }
+                }}
+              >
+                send
+              </button>
+            )}
+          </div>
+        </div>
       </aside>
     </article>
   );

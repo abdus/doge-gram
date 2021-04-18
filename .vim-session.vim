@@ -7,8 +7,8 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +50 pages/index.tsx
-badd +45 components/Card/index.tsx
+badd +244 components/Card/index.tsx
+badd +48 components/Card/Card.module.css
 argglobal
 %argdel
 edit components/Card/index.tsx
@@ -33,80 +33,125 @@ setlocal fdl=8
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-32
+35
 normal! zo
-36
+48
 normal! zo
-38
-normal! zo
-40
+49
 normal! zo
 51
 normal! zo
-52
+63
 normal! zo
-56
+90
 normal! zo
-58
+97
 normal! zo
-68
+117
 normal! zo
-72
+118
 normal! zo
-76
+122
 normal! zo
-77
+124
 normal! zo
-91
+134
 normal! zo
-92
+138
 normal! zo
-105
+139
 normal! zo
-106
+142
 normal! zo
-107
+143
 normal! zo
-120
+145
 normal! zo
-128
+145
 normal! zo
-let s:l = 103 - ((32 * winheight(0) + 24) / 49)
+150
+normal! zo
+151
+normal! zo
+165
+normal! zo
+166
+normal! zo
+179
+normal! zo
+180
+normal! zo
+181
+normal! zo
+191
+normal! zo
+192
+normal! zo
+193
+normal! zo
+194
+normal! zo
+195
+normal! zo
+197
+normal! zo
+198
+normal! zo
+208
+normal! zo
+216
+normal! zo
+217
+normal! zo
+218
+normal! zo
+219
+normal! zo
+220
+normal! zo
+226
+normal! zo
+227
+normal! zo
+231
+normal! zo
+231
+normal! zo
+234
+normal! zo
+241
+normal! zo
+242
+normal! zo
+259
+normal! zo
+267
+normal! zo
+let s:l = 207 - ((21 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-103
-normal! 09|
+207
+normal! 0
 wincmd w
 argglobal
-if bufexists("pages/index.tsx") | buffer pages/index.tsx | else | edit pages/index.tsx | endif
+if bufexists("components/Card/Card.module.css") | buffer components/Card/Card.module.css | else | edit components/Card/Card.module.css | endif
 setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=6
+setlocal fdl=2
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-11
-normal! zo
-18
-normal! zo
-19
-normal! zo
-22
-normal! zo
-23
-normal! zo
-38
-normal! zo
-let s:l = 50 - ((41 * winheight(0) + 24) / 49)
+let s:l = 75 - ((38 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-50
-normal! 0
+75
+normal! 015|
 wincmd w
+2wincmd w
 exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
 exe 'vert 2resize ' . ((&columns * 119 + 119) / 239)
 tabnext 1

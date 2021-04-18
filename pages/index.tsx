@@ -21,12 +21,13 @@ export default function Home({ posts }) {
       <Layout>
         {postsData?.map((doc) => (
           <Card
+            key={doc.uid}
             imgSrc={doc.media[0]}
-            key={doc.id}
             author={doc.author}
             caption={doc.caption}
             dateOfPosting={doc.createdAt}
             postUID={doc.uid}
+            likedBy={doc.likedBy}
           />
         ))}
       </Layout>

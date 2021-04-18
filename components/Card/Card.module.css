@@ -38,3 +38,49 @@
   color: gray;
   line-height: 1.6;
 }
+
+.comments_wrapper {
+  margin-top: 1rem;
+}
+
+.comment_box {
+  display: flex;
+  margin: 1rem 0;
+}
+
+.comment_box input,
+.comment_box button {
+  padding: 0.5rem 0;
+  font: inherit;
+  border: none;
+  outline: none;
+}
+
+.comment_box button {
+  padding: 0.5rem;
+  color: #141414;
+  background: #e3e3e3;
+  border: 1px solid gray;
+  border-radius: 0.4rem;
+}
+
+.render_comment {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-top: 2rem;
+}
+
+.render_comment img {
+  max-width: 2rem;
+  max-height: 2rem;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+}
+
+.render_comment small {
+  color: gray;
+}
+
+.render_comment strong {
+  padding-right: 0.4rem;
+}

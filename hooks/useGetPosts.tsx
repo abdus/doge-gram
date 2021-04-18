@@ -25,7 +25,7 @@ export function useGetPosts(collection: string) {
 
             postData.uid = doc.id;
             postData.author = author.data();
-            postData.createdAt = postData.createdAt.toDate().getTime(); //serializable datatype
+            postData.createdAt = postData?.createdAt?.toDate()?.getTime(); //serializable datatype
 
             dataArr.push(postData);
           }
