@@ -61,7 +61,7 @@ export function Card(props: IProps) {
   // handle like/dislike
   React.useEffect(() => {
     const loggedinUserUID = firebase.auth().currentUser?.uid;
-    let tmp = JSON.parse(JSON.stringify(post?.likedBy)) || [];
+    let tmp = JSON.parse(JSON.stringify(post?.likedBy || [])) || [];
 
     // liked, reflect the data on server
     if (hasLiked) {
