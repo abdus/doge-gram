@@ -2,7 +2,7 @@ import React from "react";
 import firebase from "firebase";
 
 export function useGetPosts(collection: string) {
-  const [data, setData] = React.useState<any>([]);
+  const [data, setData] = React.useState<any>();
   const [error, setError] = React.useState<firebase.firestore.FirestoreError>();
 
   const collectionRef = firebase.firestore().collection(collection);

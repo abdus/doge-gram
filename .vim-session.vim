@@ -7,11 +7,11 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +68 components/Card/index.tsx
-badd +7 components/Card/Card.module.css
+badd +0 pages/index.tsx
+badd +0 hooks/useGetPosts.tsx
 argglobal
 %argdel
-edit components/Card/index.tsx
+edit pages/index.tsx
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -29,45 +29,39 @@ setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=12
+setlocal fdl=6
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-35
+11
 normal! zo
-117
+18
 normal! zo
-118
-normal! zo
-134
-normal! zo
-191
-normal! zo
-208
-normal! zo
-let s:l = 68 - ((36 * winheight(0) + 24) / 49)
+let s:l = 15 - ((14 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-68
+15
 normal! 032|
 wincmd w
 argglobal
-if bufexists("components/Card/Card.module.css") | buffer components/Card/Card.module.css | else | edit components/Card/Card.module.css | endif
+if bufexists("hooks/useGetPosts.tsx") | buffer hooks/useGetPosts.tsx | else | edit hooks/useGetPosts.tsx | endif
 setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=2
+setlocal fdl=6
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 7 - ((6 * winheight(0) + 24) / 49)
+5
+normal! zo
+let s:l = 10 - ((9 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-7
-normal! 016|
+10
+normal! 025|
 wincmd w
 2wincmd w
 exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)

@@ -12,7 +12,7 @@ export default function Home({ posts }) {
   const [postsData, setPostsData] = React.useState<any[]>(posts);
 
   const { error, data } = useGetPosts("posts");
-  React.useEffect(() => setPostsData(data), [data]);
+  React.useEffect(() => data && setPostsData(data), [data]);
 
   return (
     <>
