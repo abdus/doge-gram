@@ -208,7 +208,6 @@ export function Card(props: IProps) {
             <input
               style={{ width: "100%", marginRight: "0.5rem" }}
               placeholder="add a comment ..."
-              autoFocus={true}
               onChange={(e) => setComment(e.target.value)}
               value={comment}
             />
@@ -274,7 +273,7 @@ function formatDate(dt: Date) {
 
     // for more than one week, return the date
     if (seconds / ONE_WEEK_IN_SEC > 1) {
-      return 'more than a week ago'
+      return "more than a week ago";
     }
 
     // 6 days ago

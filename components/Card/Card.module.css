@@ -3,6 +3,10 @@
   border: 1px solid lightgray;
 }
 
+.wrapper:first-child {
+  margin-top: 0;
+}
+
 @media (max-width: 800px) {
   .wrapper {
     border: none;

@@ -7,11 +7,11 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +1 components/UploadFile/index.tsx
-badd +0 components/UploadFile/UploadFile.module.css
+badd +68 components/Card/index.tsx
+badd +7 components/Card/Card.module.css
 argglobal
 %argdel
-edit components/UploadFile/index.tsx
+edit components/Card/index.tsx
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -29,19 +29,31 @@ setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=0
+setlocal fdl=12
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1 - ((0 * winheight(0) + 24) / 49)
+35
+normal! zo
+117
+normal! zo
+118
+normal! zo
+134
+normal! zo
+191
+normal! zo
+208
+normal! zo
+let s:l = 68 - ((36 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 0
+68
+normal! 032|
 wincmd w
 argglobal
-if bufexists("components/UploadFile/UploadFile.module.css") | buffer components/UploadFile/UploadFile.module.css | else | edit components/UploadFile/UploadFile.module.css | endif
+if bufexists("components/Card/Card.module.css") | buffer components/Card/Card.module.css | else | edit components/Card/Card.module.css | endif
 setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -50,12 +62,12 @@ setlocal fdl=2
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 10 - ((9 * winheight(0) + 24) / 49)
+let s:l = 7 - ((6 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-10
-normal! 03|
+7
+normal! 016|
 wincmd w
 2wincmd w
 exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
