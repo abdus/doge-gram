@@ -187,18 +187,19 @@ export function Card(props: IProps) {
 
         {/*comment section*/}
         <div className={classes.comments_wrapper}>
-          <div className={classes.render_comment}>
+          <div >
             {allComments?.map((comm) => {
               return (
-                <>
+                <div className={classes.render_comment}>
                   <img src={comm?.author?.photoURL} />
                   <article>
                     <div>
-                      <strong>{comm?.author?.name}</strong> {comm?.body}
+                      {/*<strong>{comm?.author?.name}</strong>*/}
+                      {comm?.body}
                     </div>
                     <small>{formatDate(new Date(comm?.createdAt))}</small>
                   </article>
-                </>
+                </div>
               );
             })}
           </div>
