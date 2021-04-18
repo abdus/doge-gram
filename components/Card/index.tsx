@@ -43,6 +43,10 @@ export function Card(props: IProps) {
     firebase.firestore().doc(`posts/${props.postUID}`)
   ).current;
 
+  React.useEffect(() => {
+    setHasLiked(post?.likedBy?.includes(firebase.auth()?.currentUser?.uid));
+  }, [firebase.auth()?.currentUser?.uid]);
+
   // listen for update
   React.useEffect(() => {
     const unsub = docRef.onSnapshot((snapshot) => {

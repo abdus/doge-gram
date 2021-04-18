@@ -14,6 +14,10 @@ export function Image(props: IProps) {
   const [height, setHeight] = React.useState<string | number>("30rem");
   const [minHeight, setMinHeight] = React.useState<string | number>("30rem");
 
+  // without this effect call, component does not seem to be rerendered.
+  // I don't know why
+  React.useEffect(() => {}, [imageLoaded])
+
   return (
     <>
       <figure className={classes.figure}>
@@ -37,6 +41,7 @@ export function Image(props: IProps) {
               transition: "0.4s ease-out opacity",
             }}
             onLoad={() => {
+              console.log(`onload fired`)
               setImageLoaded(true);
             }}
           />
