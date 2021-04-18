@@ -45,7 +45,7 @@ export function Card(props: IProps) {
 
   // listen for update
   React.useEffect(() => {
-    docRef.onSnapshot((snapshot) => {
+    const unsub = docRef.onSnapshot((snapshot) => {
       const newDoc = snapshot.data();
       newDoc?.author?.get().then((author) => {
         setPost({
@@ -53,37 +53,13 @@ export function Card(props: IProps) {
           imgSrc: newDoc?.media[0],
           caption: newDoc?.caption,
           author: author?.data(),
+          likedBy: newDoc?.likedBy,
         });
       });
     });
+
+    return () => unsub();
   }, [props.postUID]);
-
-  // handle like/dislike
-  React.useEffect(() => {
-    const loggedinUserUID = firebase.auth().currentUser?.uid;
-    let tmp = JSON.parse(JSON.stringify(post?.likedBy || [])) || [];
-
-    // liked, reflect the data on server
-    if (hasLiked) {
-      tmp.push(loggedinUserUID);
-      tmp = new Set(tmp);
-      docRef.set({ likedBy: [...tmp] }, { merge: true });
-    }
-
-    // unliked, reflect the data on server
-    if (!hasLiked) {
-      const index = tmp.indexOf(loggedinUserUID);
-      tmp.splice(index, 0);
-      docRef.set({ likedBy: tmp }, { merge: true });
-    }
-    if (!hasLiked && post.likedBy?.includes(loggedinUserUID)) {
-      const index = post?.likedBy?.indexOf(loggedinUserUID);
-      const tmp = JSON.parse(JSON.stringify(post?.likedBy));
-      typeof index === "number" && tmp?.splice(index, 1);
-
-      docRef.set({ likedBy: tmp }, { merge: true });
-    }
-  }, [hasLiked, firebase.auth().currentUser?.uid]);
 
   // listen for comment updates
   React.useEffect(() => {
@@ -139,12 +115,31 @@ export function Card(props: IProps) {
             style={{ marginRight: "2rem", cursor: "pointer" }}
             className={classes.flex_nowrap_aligncenter}
             onClick={() => {
-              firebase.auth().currentUser
-                ? setHasLiked(!hasLiked)
-                : addToast("You must be logged in to like a post", {
-                    appearance: "error",
-                    autoDismiss: true,
-                  });
+              if (firebase.auth().currentUser?.uid) {
+                const loggedinUserUID = firebase.auth().currentUser?.uid;
+                let tmp = JSON.parse(JSON.stringify(post?.likedBy || []));
+                const isAlreadyLiked = tmp?.includes(loggedinUserUID);
+                console.log(post.likedBy, isAlreadyLiked);
+
+                // liked, reflect the data on server
+                if (!isAlreadyLiked) {
+                  tmp.push(loggedinUserUID);
+                  tmp = new Set(tmp);
+                  docRef.set({ likedBy: [...tmp] }, { merge: true });
+                  setHasLiked(true);
+                } else {
+                  // unliked, reflect the data on server
+                  const index = tmp.indexOf(loggedinUserUID);
+                  tmp.splice(index, 1);
+                  docRef.set({ likedBy: tmp }, { merge: true });
+                  setHasLiked(false);
+                }
+              } else {
+                addToast("You must be logged in to like a post", {
+                  appearance: "error",
+                  autoDismiss: true,
+                });
+              }
             }}
           >
             <FontAwesomeIcon
