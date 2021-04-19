@@ -7,11 +7,11 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +55 components/Image/index.tsx
-badd +32 components/Image/Image.module.css
+badd +1 README.md
+badd +1 pages/_app.tsx
 argglobal
 %argdel
-edit components/Image/index.tsx
+edit README.md
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -29,57 +29,44 @@ setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=7
+setlocal fdl=2
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-13
-normal! zo
-23
-normal! zo
-24
-normal! zo
-25
-normal! zo
-37
-normal! zo
-38
-normal! zo
-56
-normal! zo
-73
-normal! zo
-74
-normal! zo
-78
-normal! zo
-79
-normal! zo
-let s:l = 69 - ((44 * winheight(0) + 24) / 49)
+let s:l = 1 - ((0 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-69
-normal! 031|
+1
+normal! 0
 wincmd w
 argglobal
-if bufexists("components/Image/Image.module.css") | buffer components/Image/Image.module.css | else | edit components/Image/Image.module.css | endif
+if bufexists("pages/_app.tsx") | buffer pages/_app.tsx | else | edit pages/_app.tsx | endif
 setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
 setlocal fdi=#
-setlocal fdl=1
+setlocal fdl=6
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 29 - ((28 * winheight(0) + 24) / 49)
+15
+normal! zo
+16
+normal! zo
+17
+normal! zo
+18
+normal! zo
+19
+normal! zo
+let s:l = 38 - ((37 * winheight(0) + 24) / 49)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-29
-normal! 03|
+38
+normal! 027|
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
 exe 'vert 2resize ' . ((&columns * 119 + 119) / 239)
 tabnext 1

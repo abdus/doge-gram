@@ -29,7 +29,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           <meta property="og:type" content="website" />
           <meta property="og:url" content="https://dogegram.dityp.com" />
           <meta property="og:title" content="DogeGram" />
-          <meta property="og:description" content='{{ .Scratch.Get "desc" }}' />
+          <meta
+            property="og:description"
+            content="shameless clone of Instagram, one feature at a time"
+          />
           <meta
             property="og:image"
             content="https://i.ibb.co/ftXkCs2/5777dac3a875c78bddc572eada99f64f.jpg"
