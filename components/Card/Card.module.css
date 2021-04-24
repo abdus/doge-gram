@@ -41,6 +41,7 @@
   margin-top: 0.6rem;
   color: gray;
   line-height: 1.6;
+  word-break: break-all;
 }
 
 .comments_wrapper {
